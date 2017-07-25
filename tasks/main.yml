@@ -20,7 +20,7 @@
 - name: Move executable files to path
   copy:
     remote_src: yes
-    src: "/tmp/{{ sratoolkit }}/{{ item }}"
+    src: "/tmp/{{ sratoolkit }}/bin/{{ item }}"
     dest: "/usr/local/bin/{{ item }}"
     mode: 0755
   with_items:
@@ -41,7 +41,6 @@
     - "kar.2.8.2"
     - "kdbmeta.2.8.2"
     - "latf-load.2.8.2"
-    - "ncbi"
     - "pacbio-load.2.8.2"
     - "prefetch.2.8.2"
     - "rcexplain.2.8.2"
