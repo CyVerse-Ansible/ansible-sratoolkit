@@ -1,0 +1,4 @@
+---
+
+URL: "https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/{{ VERSION }}/sratoolkit.{{ VERSION }}-centos_linux64.tar.gz"
+sratoolkit: "sratoolkit.2.8.2-1-centos_linux64"

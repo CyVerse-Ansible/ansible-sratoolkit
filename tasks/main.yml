@@ -1,0 +1,76 @@
+---
+
+- name: Gather OS-specific vars
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version}}.yml"
+    - "{{ ansible_distribution }}.yml"
+
+- name: Download zip
+  get_url:
+    url: "{{ URL }}"
+    dest: "/tmp/sratoolkit.tar.gz"
+
+- name: Unzip the package
+  unarchive:
+    src: "/tmp/sratoolkit.tar.gz"
+    dest: "/tmp"
+    remote_src: yes
+
+- name: Move executable files to path
+  copy:
+    remote_src: yes
+    src: "/tmp/{{ sratoolkit }}/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    mode: 0755
+  with_items:
+    - "abi-dump.2.8.2"
+    - "abi-load.2.8.2"
+    - "align-info.2.8.2"
+    - "bam-load.2.8.2"
+    - "blastn_vdb.2.6.0-2.8.2"
+    - "cache-mgr.2.8.2"
+    - "cg-load.2.8.2"
+    - "dump-ref-fasta.2.8.2"
+    - "fastdump.2.8.2"
+    - "fastq-dump.2.8.2"
+    - "fastq-load.2.8.2"
+    - "helicos-load.2.8.2"
+    - "illumina-dump.2.8.2"
+    - "illumina-load.2.8.2"
+    - "kar.2.8.2"
+    - "kdbmeta.2.8.2"
+    - "latf-load.2.8.2"
+    - "ncbi"
+    - "pacbio-load.2.8.2"
+    - "prefetch.2.8.2"
+    - "rcexplain.2.8.2"
+    - "remote-fuser.2.8.2"
+    - "sam-dump.2.8.2"
+    - "sff-dump.2.8.2"
+    - "sff-load.2.8.2"
+    - "srapath.2.8.2"
+    - "sra-pileup.2.8.2"
+    - "sra-search.2.8.2"
+    - "sra-sort.2.8.2"
+    - "sra-stat.2.8.2"
+    - "srf-load.2.8.2"
+    - "tblastn_vdb.2.6.0-2.8.2"
+    - "test-sra.2.8.2"
+    - "vdb-config.2.8.2-1"
+    - "vdb-copy.2.8.2"
+    - "vdb-decrypt.2.8.2"
+    - "vdb-dump.2.8.2"
+    - "vdb-encrypt.2.8.2"
+    - "vdb-lock.2.8.2"
+    - "vdb-passwd.2.8.2"
+    - "vdb-unlock.2.8.2"
+    - "vdb-validate.2.8.2"
+
+- name: Remove temporary files
+  file:
+    state: absent
+    path: "{{ item }}"
+  with_items:
+    - "/tmp/sratoolkit.tar"
+    - "/tmp/{{ sratoolkit }}"
